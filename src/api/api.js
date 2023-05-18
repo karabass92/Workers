@@ -10,7 +10,7 @@ const instance = axios.create(
 
 
 export const workersAPI = {
-    
+    // Обработка ошибок
     createWorker(info) {
         return instance.post(`worker`, info)
     },

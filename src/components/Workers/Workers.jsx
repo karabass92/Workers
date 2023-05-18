@@ -29,20 +29,60 @@ const Workers = ({ workers, deleteWorkerThunk, getAllWorkersThunk }) => {
 
     return (
         <Content className="site-layout" style={{ padding: '0 15px' }} >
-            <div style={{ padding: 16, height: '100%' }} >
-                <List pagination={{ position: 'top', align: 'center', pageSize: 5 }} dataSource={workers}
+            <div style={{ 
+                padding: 16, 
+                height: '100%' 
+                }} >
+                
+                <List 
+                    pagination={{ 
+                        position: 'top', 
+                        align: 'center', 
+                        pageSize: 5 
+                    }} 
+                    dataSource={workers}
                     renderItem={(item) => (
                         <List.Item key={item.id} >
-                            <section style={{ display: 'flex', justifyContent: 'space-around' }}>
-                                <img src={avatar} alt="avatar" style={{ width: 60, marginRight: 15, borderRadius: '50%' }} />
-                                <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                                    <span style={{ fontWeight: 'bold' }}>{`${item.surname} ${item.name} ${item.secondName}`}</span>
-                                    <span>Телефон: {item.telephone}</span>
-                                    <span>Отдел: {item.department}</span>
-                                    <span>Должность: {item.position}</span>
+                            <section 
+                                style={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'space-around' 
+                                    }}>
+
+                                <img src={avatar} alt="avatar" 
+                                    style={{ 
+                                        width: 60, 
+                                        marginRight: 15, 
+                                        borderRadius: '50%' 
+                                        }} />
+                                <div 
+                                    style={{ 
+                                        width: '100%', 
+                                        display: 'flex', 
+                                        flexDirection: 'column', 
+                                        alignItems: 'flex-start' 
+                                        }}>
+                                    <span style={{ fontWeight: 'bold' }}>
+                                        {`${item.surname} ${item.name} ${item.secondName}`}
+                                    </span>
+                                    <span>
+                                        Телефон: {item.telephone}
+                                    </span>
+                                    <span>
+                                        Отдел: {item.department}
+                                    </span>
+                                    <span>
+                                        Должность: {item.position}
+                                    </span>
                                 </div>
                             </section>
-                            <section style={{ display: 'flex', justifyContent: 'space-around', flexDirection: 'column' }}>
+                            
+                            <section 
+                                style={{ 
+                                    display: 'flex', 
+                                    justifyContent: 'space-around', 
+                                    flexDirection: 'column' 
+                                    }}>
                                 <Link to={`/${item.id}`}>
                                     <Button type="primary" size={'middle'} style={{ marginBottom: 10 }}>
                                         Редактировать
@@ -52,6 +92,7 @@ const Workers = ({ workers, deleteWorkerThunk, getAllWorkersThunk }) => {
                                     Удалить
                                 </Button>
                             </section>
+
                         </List.Item>
                     )}
                 />

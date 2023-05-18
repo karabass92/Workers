@@ -18,6 +18,7 @@ const App = () => {
                
                 <Navigation />
 
+                {/* обработки ошибок HOC ErrorBounady */}
                 <Routes>
                     <Route path='/' element={<Workers />} />
                     <Route path='/createworker' element={<CreateNewWorkerForm />} />
