@@ -5,7 +5,7 @@ const BASE_URL = 'http://45.136.58.232:7000/api/';
 
 
 const instance = axios.create(
-    {baseURL: BASE_URL}
+    {baseURL: BASE_URL, withCredentials: true}
 );
 
 
