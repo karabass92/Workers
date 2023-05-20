@@ -44,8 +44,9 @@ export const getWorkerInfoThunk = (id) => async (dispatch) => {
 
 
 export const updateWorkerInfoThunk = (id, data) => async (dispatch) => {
-    workersAPI.updateWorkerInfo(id, data);
+    const status = await workersAPI.updateWorkerInfo(id, data).then(res => res.status);
     dispatch(updateWorkerInfoAC(data))
+    return status
 };
 
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const BASE_URL = 'http://localhost:5000/api/';
+const BASE_URL = 'http://45.136.58.232:7000/api/';
 
 
 const instance = axios.create(
@@ -10,27 +10,39 @@ const instance = axios.create(
 
 
 export const workersAPI = {
-    // Обработка ошибок
+
     createWorker(info) {
-        return instance.post(`worker`, info)
+        return instance
+            .post(`worker`, info)
+            .then(response => response)
+            .catch(error => console.log(error))
     },
 
     getAllWorkers() {
-        return instance.get(`worker`)
+        return instance
+            .get(`worker`)
             .then(response => response.data)
+            .catch(error => console.log(error))
     },
 
     getOneWorker(workerId) {
-        return instance.get(`worker/${workerId}`)
+        return instance
+            .get(`worker/${workerId}`)
             .then(response => response.data)
+            .catch(error => console.log(error))
     },
 
     deleteWorker(workerId) {
-        return instance.delete(`worker/${workerId}`)
+        return instance
+            .delete(`worker/${workerId}`)
+            .catch(error => console.log(error))
     },
 
     updateWorkerInfo(workerId, newInfo) {
-        return instance.put(`worker/${workerId}`, newInfo)
+        return instance
+            .put(`worker/${workerId}`, newInfo)
+            .then(response => response)
+            .catch(error => console.log(error))
     }
 
 }

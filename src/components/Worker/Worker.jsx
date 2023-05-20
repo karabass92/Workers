@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Form, Input, Select, Layout, Alert } from 'antd';
+import { Button, Form, Input, Select, Layout } from 'antd';
 import { useParams } from "react-router-dom";
 import Preloader from "../Preloader/Preloader";
 import { connect } from "react-redux";
@@ -16,6 +16,8 @@ import {
     positionRules,
     departmentOptions,
     positionOptions } from "../../consts/workerConsts";
+import SuccessMessage from "../SuccessMessage/SuccessMessage";
+import FailMessage from "../FailMessage/FailMessage";
 
 
 const { Content } = Layout;
@@ -27,17 +29,25 @@ const Worker = ({worker, getWorkerInfoThunk, updateWorkerInfoThunk}) => {
     const { workerId } = useParams();
     const [form] = Form.useForm();
     const [success, setSuccess] = useState(false);
+    const [fail, setFail] = useState(false)
 
     useEffect(() => {
         getWorkerInfoThunk(workerId)
     }, [workerId]);
 
-    const onFinish = (values) => {
-        updateWorkerInfoThunk(workerId, values)
-        setSuccess(true)
-        setTimeout(() => {
-            setSuccess(false);
-        }, 1000);
+    const onFinish = (values) => {;
+        updateWorkerInfoThunk(workerId, values).then(response => {
+            if (response === 200) {
+                setSuccess(true)
+                form.resetFields()
+            } else {
+                setFail(true);
+            }
+            setTimeout(() => {
+                setSuccess(false);
+                setFail(false);
+            }, 1000);
+        })
     };
 
     if (!worker) {
@@ -77,7 +87,7 @@ const Worker = ({worker, getWorkerInfoThunk, updateWorkerInfoThunk}) => {
                 <Form.Item name="department" label="Отдел" rules={[departmentRules]} >
                     <Select placeholder="Выберите отдел из списка" allowClear >
                         {
-                            departmentOptions.map(item => <Option value={item.value}>{item.text}</Option>)
+                            departmentOptions.map(item => <Option key={item.value} value={item.value}>{item.text}</Option>)
                         }
                     </Select>
                 </Form.Item>
@@ -85,7 +95,7 @@ const Worker = ({worker, getWorkerInfoThunk, updateWorkerInfoThunk}) => {
                 <Form.Item name="position" label="Должность" rules={[positionRules]} >
                     <Select placeholder="Выберите должность из списка" allowClear >
                         {
-                            positionOptions.map(item => <Option value={item.value}>{item.text}</Option>)
+                            positionOptions.map(item => <Option key={item.value} value={item.value}>{item.text}</Option>)
                         }
                     </Select>
                 </Form.Item>
@@ -98,10 +108,13 @@ const Worker = ({worker, getWorkerInfoThunk, updateWorkerInfoThunk}) => {
                 
             </Form>
 
-            {/* применить условный рендеринг */}
-            <div style={{ display: 'flex', justifyContent: 'center', opacity: success ? 1 : 0, transition: 'all 0.5s ease' }}>
-                <Alert message="Данные успешно изменены!" type="success" style={{ width: 300, textAlign: 'center' }} />
-            </div>
+            {
+                success && <SuccessMessage />
+            }
+
+            {
+                fail && <FailMessage />
+            }
 
         </Content>
     );
